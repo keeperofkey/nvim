@@ -76,6 +76,9 @@ return {
           ['vim.lsp.util.stylize_markdown'] = true,
         },
       },
+      views = {
+        split = { opts = { history = true } },
+      },
       presets = {
         bottom_search = true,
         command_palette = true,
