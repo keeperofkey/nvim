@@ -10,16 +10,47 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      bigfile      = { enabled = true },
-      dashboard    = { enabled = true },
-      indent       = { enabled = false },
-      input        = { enabled = false },
-      lazygit      = { enabled = true },
-      notifier     = { enabled = false },
-      quickfile    = { enabled = true },
-      scroll       = { enabled = true },
+      bigfile = { enabled = true },
+      dashboard = {
+        enabled = true,
+        preset = {
+          header = (function()
+            local art = {
+              '         |',
+              '.               /',
+              ' \\       I',
+              '             /',
+              '   \\  ,g88R_',
+              '      d888(`  ).                   _',
+              '--==  888(     ).=--           .+(`  )`.  ',
+              "      Y8P(       '`.          :(   .    )",
+              '     .+(`(      .   )     .--  `.  (    ) )',
+              "    ((    (..__.:'-'   .=(   )   ` _`  ) )",
+              '`.   `(       ) )       (   .  )     (   )  ._',
+              "  )   ` __.:'   )     (   (   ))     `-'.:(`  )",
+              ")  )( )       --'       `- __.'         :(      ))",
+              ".-' (_.'          .')                    `(    )  ))",
+              "                 (_  )                     ` __.:'  ",
+            }
+            local w = 0
+            for _, l in ipairs(art) do
+              w = math.max(w, #l)
+            end
+            for i, l in ipairs(art) do
+              art[i] = l .. string.rep(' ', w - #l)
+            end
+            return table.concat(art, '\n')
+          end)(),
+        },
+      },
+      indent = { enabled = false },
+      input = { enabled = false },
+      lazygit = { enabled = true },
+      notifier = { enabled = false },
+      quickfile = { enabled = true },
+      scroll = { enabled = true },
       statuscolumn = { enabled = true },
-      words        = { enabled = true },
+      words = { enabled = true },
     },
   },
 
@@ -32,22 +63,22 @@ return {
         enabled = true,
         view = 'cmdline_popup',
       },
-      messages  = { enabled = true },
+      messages = { enabled = true },
       popupmenu = { enabled = false }, -- blink handles completion menu
-      notify    = { enabled = true },
+      notify = { enabled = true },
       lsp = {
-        progress  = { enabled = true },
-        hover     = { enabled = false },    -- use native LSP hover
-        signature = { enabled = false },    -- use native LSP signature
-        message   = { enabled = true },
+        progress = { enabled = true },
+        hover = { enabled = false }, -- use native LSP hover
+        signature = { enabled = false }, -- use native LSP signature
+        message = { enabled = true },
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
         },
       },
       presets = {
-        bottom_search        = true,
-        command_palette      = true,
+        bottom_search = true,
+        command_palette = true,
         long_message_to_split = true,
       },
     },
@@ -78,9 +109,9 @@ return {
           active = function()
             local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
             mode = mode:upper()
-            local git         = MiniStatusline.section_git { trunc_width = 75 }
+            local git = MiniStatusline.section_git { trunc_width = 75 }
             local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-            local location    = MiniStatusline.section_location { trunc_width = 75 }
+            local location = MiniStatusline.section_location { trunc_width = 75 }
 
             local macro = vim.fn.reg_recording()
             local macro_str = macro ~= '' and ('Recording @' .. macro) or ''
@@ -91,14 +122,14 @@ return {
             local clock = '   ' .. os.date '%R' .. ' '
 
             return MiniStatusline.combine_groups {
-              { hl = mode_hl,                    strings = { mode } },
-              { hl = 'MiniStatuslineDevinfo',    strings = { git, diagnostics } },
-              { hl = 'MiniStatuslineFilename',   strings = { macro_str } },
+              { hl = mode_hl, strings = { mode } },
+              { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics } },
+              { hl = 'MiniStatuslineFilename', strings = { macro_str } },
               '%<',
               '%=',
-              { hl = 'MiniStatuslineFileinfo',   strings = { ft_icon } },
-              { hl = 'MiniStatuslineDevinfo',    strings = { location } },
-              { hl = mode_hl,                    strings = { clock } },
+              { hl = 'MiniStatuslineFileinfo', strings = { ft_icon } },
+              { hl = 'MiniStatuslineDevinfo', strings = { location } },
+              { hl = mode_hl, strings = { clock } },
             }
           end,
           inactive = function()
