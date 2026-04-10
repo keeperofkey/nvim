@@ -11,13 +11,13 @@ end
 
 local c = {
   bg = xresource 'color0' or '#0c0d0f',
-  bg1 = '#23262b',
-  bg2 = '#504945',
-  dim = xresource 'color8' or '#515863', -- borders, line numbers
-  comment = '#7c6f64', -- comments
-  fgdim = '#bdae93', -- parameters, modules
+  bg1 = xresource 'color19' or '#6e6f72',
+  bg2 = xresource 'color18' or '#7f756c',
+  dim = xresource 'color8' or '#66725e', -- borders, line numbers
+  comment = '#7d9980', -- comments
+  fgdim = xresource 'color20' or '#bdae93', -- parameters, modules
   fg = xresource 'foreground' or '#c9cdd1', -- main text
-  fgbright = '#ebdbb2', -- members
+  fgbright = xresource 'color21' or '#ebdbb2', -- members
   fg1 = xresource 'color15' or '#f2f3f4',
   red = xresource 'color1' or '#fb4934', -- keywords, errors
   purple = xresource 'color5' or '#be86d3', -- constants, numbers
@@ -25,8 +25,8 @@ local c = {
   green = xresource 'color2' or '#b8bb26', -- strings, diff add
   cyan = xresource 'color6' or '#8ec07c', -- special, regex
   blue = xresource 'color4' or '#59a1c6', -- functions, info
-  orange = '#fe8019', -- keyword.function
-  darkorange = '#d65d0e',
+  orange = xresource 'color16' or '#fe8019', -- keyword.function
+  darkorange = xresource 'color17' or '#d65d0e',
 }
 
 return {
@@ -84,6 +84,7 @@ return {
         hi(0, 'Search', { fg = c.bg, bg = c.yellow })
         hi(0, 'IncSearch', { fg = c.bg, bg = c.orange })
         hi(0, 'MatchParen', { fg = c.yellow, bold = true })
+        hi(0, 'NonText', { fg = c.fgdim })
         hi(0, 'Folded', { fg = c.dim, bg = c.bg1 })
         hi(0, 'Directory', { fg = c.blue })
         hi(0, 'Title', { fg = c.blue, bold = true })
