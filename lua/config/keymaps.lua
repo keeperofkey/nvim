@@ -14,6 +14,7 @@ map('n', '<leader>fh', '<cmd>FzfLua helptags<cr>', { desc = 'Help tags' })
 map('n', '<leader>fr', '<cmd>FzfLua oldfiles<cr>', { desc = 'Recent files' })
 map('n', '<leader>fd', '<cmd>FzfLua diagnostics_document<cr>', { desc = 'Document diagnostics' })
 map('n', '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', { desc = 'Document symbols' })
+map('n', '<leader>fz', '<cmd>FzfLua zoxide<cr>', { desc = 'Zoxide' })
 
 -- noice
 map('n', '<leader>n', '<cmd>Noice fzf<cr>', { desc = 'Notification history' })

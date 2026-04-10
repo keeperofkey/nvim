@@ -19,17 +19,19 @@ local function make_previewer(dir)
       local chan = vim.api.nvim_open_term(tmpbuf, {})
       local output = vim.fn.system('eza --oneline --color=always --group-directories-first --all ' .. vim.fn.shellescape(full))
       vim.api.nvim_chan_send(chan, output)
+      self:set_preview_buf(tmpbuf)
+      vim.wo[self.win.preview_winid].number = false
+      vim.wo[self.win.preview_winid].relativenumber = false
     else
       local buf = vim.fn.bufadd(full)
       vim.fn.bufload(buf)
       pcall(vim.treesitter.start, buf)
       self:set_preview_buf(buf)
-      self.win:update_preview_scrollbar()
-      return
+      vim.wo[self.win.preview_winid].number = true
     end
 
-    self:set_preview_buf(tmpbuf)
     self.win:update_preview_scrollbar()
+    vim.api.nvim_win_set_config(self.win.preview_winid, { focusable = false })
   end
 
   return Previewer
@@ -66,10 +68,22 @@ function M.browse(dir)
   vim.list_extend(entries, dirs)
   vim.list_extend(entries, files)
 
+  local max_h = math.floor(vim.o.lines * 0.85)
+  local min_preview = 10
+  local list_h = math.min(#entries + 3, max_h - min_preview)
+  local preview_h = max_h - list_h
+
   fzf.fzf_exec(entries, {
-    prompt = vim.fn.fnamemodify(dir:sub(1, -2), ':~') .. '/  ',
+    prompt = vim.fn.fnamemodify(dir:sub(1, -2), ':~') .. '/',
     fzf_opts = { ['--no-sort'] = '' },
     previewer = make_previewer(dir),
+    winopts = {
+      height = max_h,
+      preview = {
+        layout = 'vertical',
+        vertical = 'down:' .. preview_h,
+      },
+    },
     actions = {
       ['default'] = function(selected)
         if not selected or not selected[1] then
