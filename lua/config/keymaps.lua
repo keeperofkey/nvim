@@ -20,7 +20,9 @@ map('n', '<leader>fz', '<cmd>FzfLua zoxide<cr>', { desc = 'Zoxide' })
 map('n', '<leader>n', '<cmd>Noice fzf<cr>', { desc = 'Notification history' })
 
 -- lazygit
-map('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazygit' })
+map('n', '<leader>gg', function()
+  Snacks.lazygit()
+end, { desc = 'Lazygit' })
 
 -- todo-comments
 map('n', '<leader>ft', '<cmd>TodoFzfLua<cr>', { desc = 'Find todos' })
