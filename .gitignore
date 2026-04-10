@@ -1,0 +1,9 @@
+# lazy.nvim plugin installs
+lazy-lock.json
+lua/lazy/
+
+# local claude settings
+.claude/
+
+# compiled/cache files
+*.log

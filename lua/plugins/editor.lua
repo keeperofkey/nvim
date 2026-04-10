@@ -1,0 +1,69 @@
+return {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      require('nvim-treesitter').install {
+        'lua',
+        'vim',
+        'vimdoc',
+        'query',
+        'markdown',
+        'markdown_inline',
+        'bash',
+      }
+
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          local ok = pcall(vim.treesitter.start)
+          if not ok then return end
+          vim.wo.foldmethod = 'expr'
+          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.wo.foldlevel = 99
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
+  },
+
+  {
+    'ibhagwan/fzf-lua',
+    dependencies = { 'nvim-mini/mini.nvim' },
+    cmd = 'FzfLua',
+    opts = {},
+  },
+
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
+    ft = { 'markdown' },
+    opts = {},
+  },
+
+  {
+    'supermaven-inc/supermaven-nvim',
+    event = 'InsertEnter',
+    opts = {
+      keymaps = {
+        accept_suggestion = '<Tab>',
+        clear_suggestion = '<C-]>',
+        accept_word = '<C-j>',
+      },
+    },
+  },
+
+  {
+    'folke/todo-comments.nvim',
+    event = 'BufReadPost',
+    opts = { signs = false },
+  },
+
+  {
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPost',
+    config = function()
+      require('colorizer').setup()
+    end,
+  },
+}
