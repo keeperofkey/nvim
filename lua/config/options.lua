@@ -21,7 +21,7 @@ opt.list = true
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 opt.inccommand = 'split'
 opt.cursorline = true
-opt.scrolloff = 10
+opt.scrolloff = 999
 opt.autochdir = false
 opt.hlsearch = true
 

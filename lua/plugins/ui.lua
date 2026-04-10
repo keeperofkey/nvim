@@ -49,8 +49,9 @@ return {
       notifier = { enabled = false },
       quickfile = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { enabled = true },
-      words = { enabled = true },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+      zen = { enabled = true },
     },
   },
 
