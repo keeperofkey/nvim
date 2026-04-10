@@ -194,6 +194,9 @@ return {
         hi(0, 'TelescopeSelection', { bg = c.bg1 })
         hi(0, 'TelescopeMatching', { fg = c.yellow, bold = true })
 
+        -- Noice
+        hi(0, 'NoiceCmdlineBorder', { link = 'NoiceCmdlinePopupBorder' })
+
         -- Blink.cmp
         hi(0, 'BlinkCmpMenu', { link = 'NormalFloat' })
         hi(0, 'BlinkCmpDoc', { link = 'NormalFloat' })

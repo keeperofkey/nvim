@@ -64,12 +64,12 @@ return {
         view = 'cmdline_popup',
       },
       messages = { enabled = true },
-      popupmenu = { enabled = false }, -- blink handles completion menu
+      popupmenu = { enabled = true, backend = 'nui' },
       notify = { enabled = true },
       lsp = {
         progress = { enabled = true },
-        hover = { enabled = false }, -- use native LSP hover
-        signature = { enabled = false }, -- use native LSP signature
+        hover = { enabled = false },
+        signature = { enabled = false },
         message = { enabled = true },
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
@@ -78,10 +78,20 @@ return {
       },
       views = {
         split = { opts = { history = true } },
+        cmdline_popup = {
+          position = { row = '95%', col = '5%' },
+          size = { width = 'auto', height = 'auto' },
+          border = { style = 'rounded', padding = { 0, 1 } },
+        },
+        -- popupmenu = {
+        --   relative = 'editor',
+        --   position = { row = '50%', col = '4%' },
+        --   size = { width = 'auto', height = 'auto' },
+        --   border = { style = 'rounded', padding = { 0, 1 } },
+        -- },
       },
       presets = {
         bottom_search = true,
-        command_palette = true,
         long_message_to_split = true,
       },
     },
