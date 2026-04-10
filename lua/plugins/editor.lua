@@ -19,7 +19,9 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         callback = function()
           local ok = pcall(vim.treesitter.start)
-          if not ok then return end
+          if not ok then
+            return
+          end
           vim.wo.foldmethod = 'expr'
           vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           vim.wo.foldlevel = 99
@@ -50,7 +52,8 @@ return {
       keymaps = {
         accept_suggestion = '<Tab>',
         clear_suggestion = '<C-]>',
-        accept_word = '<C-j>',
+        accept_word = '<C-Right>',
+        clear_word = '<C-Left>',
       },
     },
   },

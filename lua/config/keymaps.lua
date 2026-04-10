@@ -16,6 +16,10 @@ map('n', '<leader>fd', '<cmd>FzfLua diagnostics_document<cr>', { desc = 'Documen
 map('n', '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', { desc = 'Document symbols' })
 map('n', '<leader>fz', '<cmd>FzfLua zoxide<cr>', { desc = 'Zoxide' })
 
+-- buffers
+map('n', '<leader><Tab>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+map('n', '<leader><S-Tab>', '<cmd>bprev<cr>', { desc = 'Prev buffer' })
+
 -- noice
 map('n', '<leader>n', '<cmd>Noice fzf<cr>', { desc = 'Notification history' })
 
@@ -23,6 +27,11 @@ map('n', '<leader>n', '<cmd>Noice fzf<cr>', { desc = 'Notification history' })
 map('n', '<leader>gg', function()
   Snacks.lazygit()
 end, { desc = 'Lazygit' })
+
+-- zen
+map('n', '<leader>z', function()
+  Snacks.zen()
+end, { desc = 'Zen mode' })
 
 -- todo-comments
 map('n', '<leader>ft', '<cmd>TodoFzfLua<cr>', { desc = 'Find todos' })
@@ -150,6 +159,7 @@ vim.api.nvim_create_autocmd('User', {
       { '<leader>la', desc = 'Code action' },
       { '<leader>lf', desc = 'Format' },
       { '<leader>w', group = 'window' },
+      { '<leader>z', desc = 'Zen mode' },
       { 's', group = 'surround' },
       { 'sa', desc = 'Add surrounding' },
       { 'sd', desc = 'Delete surrounding' },
