@@ -1,27 +1,28 @@
 local map = vim.keymap.set
 
--- fzf-lua
-map('n', '<leader>ff', '<cmd>FzfLua files<cr>', { desc = 'Find files' })
+-- snacks picker
+map('n', '<leader>fp', function() Snacks.picker() end, { desc = 'Pick picker' })
+map('n', '<leader>ff', function() Snacks.picker.files() end, { desc = 'Find files' })
 map('n', '<leader>fb', function()
   require('lib.filebrowser').browse()
 end, { desc = 'File browser' })
 map('n', '<leader>fm', function()
   require('mini.files').open()
 end, { desc = 'File manager' })
-map('n', '<leader>fg', '<cmd>FzfLua live_grep<cr>', { desc = 'Live grep' })
-map('n', '<leader>f/', '<cmd>FzfLua buffers<cr>', { desc = 'Buffers' })
-map('n', '<leader>fh', '<cmd>FzfLua helptags<cr>', { desc = 'Help tags' })
-map('n', '<leader>fr', '<cmd>FzfLua oldfiles<cr>', { desc = 'Recent files' })
-map('n', '<leader>fd', '<cmd>FzfLua diagnostics_document<cr>', { desc = 'Document diagnostics' })
-map('n', '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', { desc = 'Document symbols' })
-map('n', '<leader>fz', '<cmd>FzfLua zoxide<cr>', { desc = 'Zoxide' })
+map('n', '<leader>fg', function() Snacks.picker.grep() end, { desc = 'Live grep' })
+map('n', '<leader>f/', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
+map('n', '<leader>fh', function() Snacks.picker.help() end, { desc = 'Help tags' })
+map('n', '<leader>fr', function() Snacks.picker.recent() end, { desc = 'Recent files' })
+map('n', '<leader>fd', function() Snacks.picker.diagnostics_buffer() end, { desc = 'Document diagnostics' })
+map('n', '<leader>fs', function() Snacks.picker.lsp_symbols() end, { desc = 'Document symbols' })
+map('n', '<leader>fz', function() Snacks.picker.zoxide() end, { desc = 'Zoxide' })
 
 -- buffers
 map('n', '<leader><Tab>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
 map('n', '<leader><S-Tab>', '<cmd>bprev<cr>', { desc = 'Prev buffer' })
 
 -- noice
-map('n', '<leader>n', '<cmd>Noice fzf<cr>', { desc = 'Notification history' })
+map('n', '<leader>n', function() Snacks.picker.notifications() end, { desc = 'Notification history' })
 
 -- lazygit
 map('n', '<leader>gg', function()
@@ -34,7 +35,7 @@ map('n', '<leader>z', function()
 end, { desc = 'Zen mode' })
 
 -- todo-comments
-map('n', '<leader>ft', '<cmd>TodoFzfLua<cr>', { desc = 'Find todos' })
+map('n', '<leader>ft', function() Snacks.picker.todo_comments() end, { desc = 'Find todos' })
 
 -- clear search highlight
 map('n', '<Esc>', '<cmd>nohlsearch<cr>')
@@ -62,9 +63,9 @@ map('n', '<leader>wD', '<C-w>>', { desc = 'Increase width' })
 
 -- terminal
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-map('n', '<leader>tt', function() Snacks.terminal() end, { desc = 'Toggle terminal' })
-map('n', '<leader>tT', function() Snacks.terminal(nil, { cwd = vim.fn.expand('%:p:h') }) end, { desc = 'Terminal (file dir)' })
-map('n', '<leader>ts', function() Snacks.terminal(nil, { win = { position = 'right' } }) end, { desc = 'Terminal (vsplit)' })
+map('n', '<leader>tt', function() Snacks.terminal(nil, { count = 1 }) end, { desc = 'Toggle terminal (float)' })
+map('n', '<leader>tT', function() Snacks.terminal(nil, { count = 2, cwd = vim.fn.expand('%:p:h') }) end, { desc = 'Terminal (file dir)' })
+map('n', '<leader>ts', function() Snacks.terminal(nil, { count = 3, win = { position = 'right', width = 0.4 } }) end, { desc = 'Toggle terminal (split)' })
 
 -- lsp (buffer-local, set on attach)
 vim.api.nvim_create_autocmd('LspAttach', {

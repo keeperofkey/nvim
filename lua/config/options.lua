@@ -24,6 +24,10 @@ opt.cursorline = true
 opt.scrolloff = 999
 opt.autochdir = false
 opt.hlsearch = true
+opt.smartindent = true
+opt.expandtab = true
+opt.shiftwidth = 2
+opt.tabstop = 2
 
 vim.diagnostic.config {
   signs = true,

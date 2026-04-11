@@ -41,9 +41,9 @@ return {
       local hi = vim.api.nvim_set_hl
       local function apply()
         -- Editor / UI
-        hi(0, 'Normal', { fg = c.fg })
+        hi(0, 'Normal', { fg = c.fg, bg = 'none' })
         hi(0, 'NormalNC', { link = 'Normal' })
-        hi(0, 'NormalFloat', { fg = c.fg })
+        hi(0, 'NormalFloat', { fg = c.fg, bg = 'none' })
         hi(0, 'SignColumn', {})
         hi(0, 'LineNr', { fg = c.dim })
         hi(0, 'CursorLineNr', { fg = c.fg, bg = c.bg1 })
@@ -124,7 +124,7 @@ return {
         hi(0, 'Todo', { fg = c.yellow, bold = true })
 
         -- Popup menu
-        hi(0, 'Pmenu', { fg = c.fg, bg = c.bg2 })
+        hi(0, 'Pmenu', { fg = c.fg, bg = 'none' })
         hi(0, 'PmenuSel', { fg = c.yellow, bg = c.bg2, bold = true })
         hi(0, 'PmenuSbar', { bg = c.bg2 })
         hi(0, 'PmenuThumb', { bg = c.dim })
@@ -179,20 +179,20 @@ return {
         hi(0, '@lsp.type.parameter', { link = '@variable.parameter' })
 
         -- Telescope
-        hi(0, 'TelescopeNormal', { link = 'NormalFloat' })
-        hi(0, 'TelescopePromptNormal', { link = 'NormalFloat' })
-        hi(0, 'TelescopePreviewNormal', { link = 'NormalFloat' })
-        hi(0, 'TelescopeResultsNormal', { link = 'NormalFloat' })
-        hi(0, 'TelescopeBorder', { link = 'FloatBorder' })
-        hi(0, 'TelescopePromptBorder', { link = 'FloatBorder' })
-        hi(0, 'TelescopePreviewBorder', { link = 'FloatBorder' })
-        hi(0, 'TelescopeResultsBorder', { link = 'FloatBorder' })
-        hi(0, 'TelescopePromptPrefix', { fg = c.red })
-        hi(0, 'TelescopePromptTitle', { fg = c.blue, bold = true })
-        hi(0, 'TelescopePreviewTitle', { fg = c.green, bold = true })
-        hi(0, 'TelescopeResultsTitle', { fg = c.purple, bold = true })
-        hi(0, 'TelescopeSelection', { bg = c.bg1 })
-        hi(0, 'TelescopeMatching', { fg = c.yellow, bold = true })
+        -- hi(0, 'TelescopeNormal', { link = 'NormalFloat' })
+        -- hi(0, 'TelescopePromptNormal', { link = 'NormalFloat' })
+        -- hi(0, 'TelescopePreviewNormal', { link = 'NormalFloat' })
+        -- hi(0, 'TelescopeResultsNormal', { link = 'NormalFloat' })
+        -- hi(0, 'TelescopeBorder', { link = 'FloatBorder' })
+        -- hi(0, 'TelescopePromptBorder', { link = 'FloatBorder' })
+        -- hi(0, 'TelescopePreviewBorder', { link = 'FloatBorder' })
+        -- hi(0, 'TelescopeResultsBorder', { link = 'FloatBorder' })
+        -- hi(0, 'TelescopePromptPrefix', { fg = c.red })
+        -- hi(0, 'TelescopePromptTitle', { fg = c.blue, bold = true })
+        -- hi(0, 'TelescopePreviewTitle', { fg = c.green, bold = true })
+        -- hi(0, 'TelescopeResultsTitle', { fg = c.purple, bold = true })
+        -- hi(0, 'TelescopeSelection', { bg = c.bg1 })
+        -- hi(0, 'TelescopeMatching', { fg = c.yellow, bold = true })
 
         -- Noice
         hi(0, 'NoiceCmdlineBorder', { link = 'NoiceCmdlinePopupBorder' })

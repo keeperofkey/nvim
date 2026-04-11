@@ -47,6 +47,7 @@ return {
       input = { enabled = false },
       lazygit = { enabled = true },
       notifier = { enabled = false },
+      picker = { enabled = true },
       quickfile = { enabled = true },
       scroll = { enabled = true },
       statuscolumn = { enabled = false },
@@ -109,6 +110,11 @@ return {
       },
       views = {
         split = { opts = { history = true } },
+        mini = {
+          position = { row = 1, col = '100%' },
+          size = { max_width = 60 },
+          timeout = 3000,
+        },
         cmdline_popup = {
           position = { row = '95%', col = '5%' },
           size = { width = 'auto', height = 'auto' },

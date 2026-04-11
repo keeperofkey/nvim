@@ -31,14 +31,7 @@ return {
     end,
   },
 
-  {
-    'ibhagwan/fzf-lua',
-    dependencies = { 'nvim-mini/mini.nvim' },
-    cmd = 'FzfLua',
-    opts = {},
-  },
-
-  {
+{
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
     ft = { 'markdown' },

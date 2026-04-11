@@ -12,17 +12,17 @@ return {
       completion = {
         menu = {
           border = 'rounded',
-          winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:NoiceCmdlineBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+          winhighlight = 'FloatBorder:NoiceCmdlineBorder,CursorLine:BlinkCmpMenuSelection',
           cmdline_position = function()
             local pos = vim.g.ui_cmdline_pos
             if pos then
-              return { pos[1] - 2, pos[2] - 1 }
+              return { pos[1] - 2, pos[2] - 3 }
             end
             local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-            return { vim.o.lines - height - 3, 0 }
+            return { vim.o.lines - height, 0 }
           end,
           draw = {
-            padding = { 1, 1 },
+            -- padding = { 1, 1 },
             columns = {
               { 'label', 'label_description', gap = 1 },
               { 'kind_icon', gap = 1 },
@@ -41,17 +41,7 @@ return {
         enabled = true,
         completion = {
           menu = {
-            min_width = 15,
             auto_show = true,
-            border = 'rounded',
-            direction_priority = { 'n' },
-            winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:NoiceCmdlineBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
-            draw = {
-              columns = {
-                { 'kind_icon', gap = 1 },
-                { 'label', 'label_description' },
-              },
-            },
           },
         },
       },
