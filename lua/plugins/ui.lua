@@ -51,9 +51,39 @@ return {
       scroll = { enabled = true },
       statuscolumn = { enabled = false },
       words = { enabled = false },
+      terminal = {
+        enabled = true,
+        win = {
+          position = 'float',
+          border = 'rounded',
+          height = 0.7,
+          width = 0.8,
+          backdrop = 80,
+          keys = {
+            term_normal = {
+              '<esc>',
+              function(self)
+                self.esc_timer = self.esc_timer or (vim.uv or vim.loop).new_timer()
+                if self.esc_timer:is_active() then
+                  self.esc_timer:stop()
+                  vim.cmd 'stopinsert'
+                  self:hide()
+                else
+                  self.esc_timer:start(200, 0, function() end)
+                  return '<esc>'
+                end
+              end,
+              mode = 't',
+              expr = true,
+              desc = 'Double escape to hide terminal',
+            },
+          },
+        },
+      },
       zen = { enabled = true },
     },
   },
+
 
   {
     'folke/noice.nvim',

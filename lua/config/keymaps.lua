@@ -62,6 +62,9 @@ map('n', '<leader>wD', '<C-w>>', { desc = 'Increase width' })
 
 -- terminal
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+map('n', '<leader>tt', function() Snacks.terminal() end, { desc = 'Toggle terminal' })
+map('n', '<leader>tT', function() Snacks.terminal(nil, { cwd = vim.fn.expand('%:p:h') }) end, { desc = 'Terminal (file dir)' })
+map('n', '<leader>ts', function() Snacks.terminal(nil, { win = { position = 'right' } }) end, { desc = 'Terminal (vsplit)' })
 
 -- lsp (buffer-local, set on attach)
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -159,6 +162,7 @@ vim.api.nvim_create_autocmd('User', {
       { '<leader>la', desc = 'Code action' },
       { '<leader>lf', desc = 'Format' },
       { '<leader>w', group = 'window' },
+      { '<leader>t', group = 'terminal' },
       { '<leader>z', desc = 'Zen mode' },
       { 's', group = 'surround' },
       { 'sa', desc = 'Add surrounding' },
