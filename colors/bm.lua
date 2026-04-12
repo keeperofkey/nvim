@@ -46,12 +46,12 @@ local c = {
   bg = '#231f20', -- gray-10  (used as fg on inverted elements)
   bg_alt = '#414042', -- gray-9
   bg_sel = '#a7a9ac', -- gray-8   (selection, visual)
-  bg_cursor = '#58595b', -- interpolated, subtle cursorline
+  bg_cursor = '#58595b', -- subtle cursorline
   -- Foregrounds
   fg = '#d1d3d4', -- gray-2   (normal text, identifiers)
   fg_dim = '#939598', -- gray-5   (operators, hints)
   fg_mute = '#808285', -- gray-6   (comments, punctuation)
-  fg_faint = '#6d6e71', -- gray-7   (line numbers)
+  fg_faint = '#a7a9ac', -- gray-7   (line numbers)
 }
 
 -- Semantic aliases (post-init so we can reference base colors)
@@ -78,7 +78,7 @@ hi('ColorColumn', { bg = c.bg_cursor })
 
 hi('LineNr', { fg = c.fg_dim })
 hi('CursorLineNr', { fg = c.fg_dim, bg = c.bg_cursor })
-hi('SignColumn', { bg = 'none' })
+hi('SignColumn', {})
 hi('FoldColumn', { fg = c.fg_faint })
 hi('Folded', { fg = c.fg_mute, bg = c.bg_alt })
 
