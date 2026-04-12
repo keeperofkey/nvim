@@ -156,6 +156,7 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'VeryLazy',
   callback = function()
     require('which-key').add {
+      { '<leader>a', group = 'ai/claude' },
       { '<leader>f', group = 'find/files' },
       { '<leader>g', group = 'git' },
       { '<leader>l', group = 'lsp' },

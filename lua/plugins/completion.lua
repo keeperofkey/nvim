@@ -4,7 +4,15 @@ return {
     dependencies = { 'rafamadriz/friendly-snippets' },
     version = '1.*',
     opts = {
-      keymap = { preset = 'enter' },
+      keymap = {
+        preset = 'enter',
+        ['<C-y>'] = { 'select_and_accept' },
+        ['<Tab>'] = { 'fallback' },
+        ['<S-Tab>'] = { 'fallback' },
+        ['<CR>'] = { 'snippet_forward', 'select_and_accept' },
+        ['<C-Right>'] = { 'snippet_forward', 'select_and_accept' },
+        ['<C-Left>'] = { 'snippet_backward', 'fallback' },
+      },
       appearance = { nerd_font_variant = 'mono' },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },

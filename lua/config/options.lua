@@ -24,6 +24,7 @@ opt.cursorline = true
 opt.scrolloff = 999
 opt.autochdir = false
 opt.hlsearch = true
+opt.autoindent = true
 opt.smartindent = true
 opt.expandtab = true
 opt.shiftwidth = 2

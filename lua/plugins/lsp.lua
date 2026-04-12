@@ -29,6 +29,8 @@ return {
         'ts_ls',
         'cssls',
         'pyright',
+        'svelte',
+        'tailwindcss',
       },
       automatic_enable = true,
     },
