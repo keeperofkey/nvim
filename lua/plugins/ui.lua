@@ -46,7 +46,7 @@ return {
       indent = { enabled = false },
       input = { enabled = false },
       lazygit = { enabled = true },
-      notifier = { enabled = false },
+      notifier = { enabled = true },
       picker = { enabled = true },
       quickfile = { enabled = true },
       scroll = { enabled = true },
@@ -85,7 +85,6 @@ return {
     },
   },
 
-
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
@@ -97,7 +96,7 @@ return {
       },
       messages = { enabled = true },
       popupmenu = { enabled = true, backend = 'nui' },
-      notify = { enabled = true },
+      notify = { enabled = false },
       lsp = {
         progress = { enabled = true },
         hover = { enabled = false },
@@ -153,12 +152,10 @@ return {
       }
 
       require('mini.tabline').setup()
-
       require('mini.statusline').setup {
         content = {
           active = function()
             local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-            mode = mode:upper()
             local git = MiniStatusline.section_git { trunc_width = 75 }
             local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
             local location = MiniStatusline.section_location { trunc_width = 75 }

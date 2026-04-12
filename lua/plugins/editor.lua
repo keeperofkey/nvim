@@ -5,7 +5,7 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       require('nvim-treesitter').setup {
-        ensure_install = {
+        ensure_installed = {
           'lua',
           'vim',
           'vimdoc',
@@ -25,17 +25,31 @@ return {
           vim.wo.foldmethod = 'expr'
           vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           vim.wo.foldlevel = 99
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
     end,
   },
 
-{
+  {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
     ft = { 'markdown' },
-    opts = {},
+    opts = {
+      heading = {
+        width = 'block',
+        left_pad = 1,
+        right_pad = 4,
+        icons = '',
+        border = true,
+        border_virtual = true,
+        above = '',
+        below = '━',
+      },
+      pipe_table = {
+        preset = 'round',
+        cell = 'padded',
+      },
+    },
   },
 
   {
