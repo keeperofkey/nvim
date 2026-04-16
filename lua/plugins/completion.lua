@@ -19,21 +19,40 @@ return {
       },
       completion = {
         menu = {
-          border = 'rounded',
-          winhighlight = 'FloatBorder:NoiceCmdlineBorder,CursorLine:BlinkCmpMenuSelection',
-          cmdline_position = function()
-            local pos = vim.g.ui_cmdline_pos
-            if pos then
-              return { pos[1] - 2, pos[2] - 3 }
-            end
-            local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-            return { vim.o.lines - height, 0 }
-          end,
+          -- adjust menu position for noice.nvim
+          -- cmdline_position = function()
+          --   local pos = vim.g.ui_cmdline_pos
+          --   if pos then
+          --     return { pos[1] - 2, pos[2] - 3 }
+          --   end
+          --   local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+          --   return { vim.o.lines - height, 0 }
+          -- end,
           draw = {
             -- padding = { 1, 1 },
             columns = {
               { 'label', 'label_description', gap = 1 },
               { 'kind_icon', gap = 1 },
+            },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  local kind_icon, kind_hl = get_mini_icon(ctx)
+                  return kind_icon
+                end,
+                -- (optional) use highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl = get_mini_icon(ctx)
+                  return hl
+                end,
+              },
+              kind = {
+                -- (optional) use highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl = get_mini_icon(ctx)
+                  return hl
+                end,
+              },
             },
           },
         },

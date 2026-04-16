@@ -29,6 +29,7 @@ opt.smartindent = true
 opt.expandtab = true
 opt.shiftwidth = 2
 opt.tabstop = 2
+opt.winborder = 'rounded'
 
 vim.diagnostic.config {
   signs = true,

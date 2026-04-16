@@ -45,7 +45,7 @@ local c = {
   -- cursorline, visual selection, search, diff, popup menus)
   bg = '#231f20', -- gray-10  (used as fg on inverted elements)
   bg_alt = '#414042', -- gray-9
-  bg_sel = '#a7a9ac', -- gray-8   (selection, visual)
+  bg_sel = '#184898', -- gray-8   (selection, visual)
   bg_cursor = '#58595b', -- subtle cursorline
   -- Foregrounds
   fg = '#d1d3d4', -- gray-2   (normal text, identifiers)
@@ -99,12 +99,13 @@ hi('Substitute', { fg = c.bg, bg = c.error })
 
 hi('MatchParen', { fg = c.amber, bold = true, underline = true })
 
-hi('Pmenu', { fg = c.fg, bg = 'none' })
+hi('Pmenu', { fg = c.fg_mute, bg = 'none' })
 hi('PmenuSel', { fg = c.fg, bg = c.bg_sel, bold = true })
 hi('PmenuSbar', { bg = c.bg_alt })
 hi('PmenuThumb', { bg = c.bg_sel })
 hi('PmenuKind', { fg = c.fg_dim })
 hi('PmenuKindSel', { fg = c.amber })
+hi('PmenuBorder', { fg = c.amber })
 
 hi('FloatBorder', { fg = c.bg_sel })
 hi('FloatTitle', { fg = c.fg_dim, bold = true })
@@ -341,7 +342,7 @@ hi('MiniTablineModifiedHidden', { fg = c.sienna, bg = 'none' })
 
 hi('BlinkCmpMenu', { link = 'NormalFloat' })
 hi('BlinkCmpDoc', { link = 'NormalFloat' })
-hi('BlinkCmpMenuBorder', { link = 'FloatBorder' })
+-- hi('BlinkCmpMenuBorder', { link = 'FloatBorder' })
 hi('BlinkCmpDocBorder', { link = 'FloatBorder' })
 hi('BlinkCmpDocSeparator', { link = 'FloatBorder' })
 hi('BlinkCmpMenuSelection', { fg = c.fg, bg = c.bg_sel, bold = true })

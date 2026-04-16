@@ -4,7 +4,7 @@ return {
     build = ':TSUpdate',
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
-      require('nvim-treesitter').setup {
+      require('nvim-treesitter.configs').setup {
         ensure_installed = {
           'lua',
           'vim',
@@ -13,7 +13,12 @@ return {
           'markdown',
           'markdown_inline',
           'bash',
+          'html',
+          'javascript',
+          'css',
+          'typescript',
         },
+        highlight = { enable = true },
       }
 
       vim.api.nvim_create_autocmd('FileType', {
