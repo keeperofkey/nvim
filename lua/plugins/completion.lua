@@ -34,26 +34,26 @@ return {
               { 'label', 'label_description', gap = 1 },
               { 'kind_icon', gap = 1 },
             },
-            components = {
-              kind_icon = {
-                text = function(ctx)
-                  local kind_icon, kind_hl = get_mini_icon(ctx)
-                  return kind_icon
-                end,
-                -- (optional) use highlights from mini.icons
-                highlight = function(ctx)
-                  local _, hl = get_mini_icon(ctx)
-                  return hl
-                end,
-              },
-              kind = {
-                -- (optional) use highlights from mini.icons
-                highlight = function(ctx)
-                  local _, hl = get_mini_icon(ctx)
-                  return hl
-                end,
-              },
-            },
+            -- components = {
+            --   kind_icon = {
+            --     text = function(ctx)
+            --       local kind_icon, kind_hl = get_mini_icon(ctx)
+            --       return kind_icon
+            --     end,
+            --     -- (optional) use highlights from mini.icons
+            --     highlight = function(ctx)
+            --       local _, hl = get_mini_icon(ctx)
+            --       return hl
+            --     end,
+            --   },
+            --   kind = {
+            --     -- (optional) use highlights from mini.icons
+            --     highlight = function(ctx)
+            --       local _, hl = get_mini_icon(ctx)
+            --       return hl
+            --     end,
+            --   },
+            -- },
           },
         },
         documentation = {
