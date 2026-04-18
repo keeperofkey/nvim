@@ -1,17 +1,41 @@
 local map = vim.keymap.set
 
+local function project_root()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local start = bufname ~= '' and vim.fs.dirname(bufname) or (vim.uv or vim.loop).cwd()
+
+  return vim.fs.root(start, {
+    '.git',
+    'package.json',
+    'pyproject.toml',
+    'Cargo.toml',
+    'go.mod',
+    'Makefile',
+  }) or (vim.uv or vim.loop).cwd()
+end
+
 -- snacks picker
 map('n', '<leader>fp', function() Snacks.picker() end, { desc = 'Pick picker' })
-map('n', '<leader>ff', function() Snacks.picker.files() end, { desc = 'Find files' })
+map('n', '<leader>ff', function()
+  Snacks.picker.files { cwd = project_root() }
+end, { desc = 'Find project files' })
 map('n', '<leader>fb', function()
   require('lib.filebrowser').browse()
 end, { desc = 'File browser' })
 map('n', '<leader>fm', function()
   require('mini.files').open()
 end, { desc = 'File manager' })
-map('n', '<leader>fg', function() Snacks.picker.grep() end, { desc = 'Live grep' })
+map('n', '<leader>fg', function()
+  Snacks.picker.grep { cwd = project_root() }
+end, { desc = 'Live grep project' })
 map('n', '<leader>f/', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
 map('n', '<leader>fh', function() Snacks.picker.help() end, { desc = 'Help tags' })
+map('n', '<leader>fc', function()
+  Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
+end, { desc = 'Neovim config files' })
+map('n', '<leader>fC', function()
+  Snacks.picker.files { cwd = vim.fs.dirname(vim.fn.stdpath 'config') }
+end, { desc = '.config files' })
 map('n', '<leader>fr', function() Snacks.picker.recent() end, { desc = 'Recent files' })
 map('n', '<leader>fd', function() Snacks.picker.diagnostics_buffer() end, { desc = 'Document diagnostics' })
 map('n', '<leader>fs', function() Snacks.picker.lsp_symbols() end, { desc = 'Document symbols' })
@@ -26,7 +50,7 @@ map('n', '<leader>n', function() Snacks.picker.notifications() end, { desc = 'No
 
 -- lazygit
 map('n', '<leader>gg', function()
-  Snacks.lazygit()
+  Snacks.lazygit { cwd = project_root() }
 end, { desc = 'Lazygit' })
 
 -- zen
