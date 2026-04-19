@@ -1,21 +1,41 @@
 local map = vim.keymap.set
 
 local function project_root()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  local start = bufname ~= '' and vim.fs.dirname(bufname) or (vim.uv or vim.loop).cwd()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local cwd = (vim.uv or vim.loop).cwd()
+
+  for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
+    local root = client.config.root_dir
+    if root and root ~= '' then
+      return root
+    end
+
+    local workspace_folders = client.config.workspace_folders
+    if workspace_folders and workspace_folders[1] and workspace_folders[1].name then
+      return workspace_folders[1].name
+    end
+  end
+
+  local start = bufname ~= '' and vim.fs.dirname(bufname) or cwd
 
   return vim.fs.root(start, {
     '.git',
+    '.luarc.json',
+    '.luarc.jsonc',
     'package.json',
     'pyproject.toml',
     'Cargo.toml',
     'go.mod',
     'Makefile',
-  }) or (vim.uv or vim.loop).cwd()
+    '.jj',
+  }) or cwd
 end
 
 -- snacks picker
-map('n', '<leader>fp', function() Snacks.picker() end, { desc = 'Pick picker' })
+map('n', '<leader>fp', function()
+  Snacks.picker()
+end, { desc = 'Pick picker' })
 map('n', '<leader>ff', function()
   Snacks.picker.files { cwd = project_root() }
 end, { desc = 'Find project files' })
@@ -28,25 +48,39 @@ end, { desc = 'File manager' })
 map('n', '<leader>fg', function()
   Snacks.picker.grep { cwd = project_root() }
 end, { desc = 'Live grep project' })
-map('n', '<leader>f/', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
-map('n', '<leader>fh', function() Snacks.picker.help() end, { desc = 'Help tags' })
+map('n', '<leader>f/', function()
+  Snacks.picker.buffers()
+end, { desc = 'Buffers' })
+map('n', '<leader>fh', function()
+  Snacks.picker.help()
+end, { desc = 'Help tags' })
 map('n', '<leader>fc', function()
   Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
 end, { desc = 'Neovim config files' })
 map('n', '<leader>fC', function()
   Snacks.picker.files { cwd = vim.fs.dirname(vim.fn.stdpath 'config') }
 end, { desc = '.config files' })
-map('n', '<leader>fr', function() Snacks.picker.recent() end, { desc = 'Recent files' })
-map('n', '<leader>fd', function() Snacks.picker.diagnostics_buffer() end, { desc = 'Document diagnostics' })
-map('n', '<leader>fs', function() Snacks.picker.lsp_symbols() end, { desc = 'Document symbols' })
-map('n', '<leader>fz', function() Snacks.picker.zoxide() end, { desc = 'Zoxide' })
+map('n', '<leader>fr', function()
+  Snacks.picker.recent()
+end, { desc = 'Recent files' })
+map('n', '<leader>fd', function()
+  Snacks.picker.diagnostics_buffer()
+end, { desc = 'Document diagnostics' })
+map('n', '<leader>fs', function()
+  Snacks.picker.lsp_symbols()
+end, { desc = 'Document symbols' })
+map('n', '<leader>fz', function()
+  Snacks.picker.zoxide()
+end, { desc = 'Zoxide' })
 
 -- buffers
 map('n', '<leader><Tab>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
 map('n', '<leader><S-Tab>', '<cmd>bprev<cr>', { desc = 'Prev buffer' })
 
 -- noice
-map('n', '<leader>n', function() Snacks.picker.notifications() end, { desc = 'Notification history' })
+map('n', '<leader>n', function()
+  Snacks.picker 'noice'
+end, { desc = 'Notification history' })
 
 -- lazygit
 map('n', '<leader>gg', function()
@@ -59,7 +93,9 @@ map('n', '<leader>z', function()
 end, { desc = 'Zen mode' })
 
 -- todo-comments
-map('n', '<leader>ft', function() Snacks.picker.todo_comments() end, { desc = 'Find todos' })
+map('n', '<leader>ft', function()
+  Snacks.picker.todo_comments()
+end, { desc = 'Find todos' })
 
 -- clear search highlight
 map('n', '<Esc>', '<cmd>nohlsearch<cr>')
@@ -87,9 +123,15 @@ map('n', '<leader>wD', '<C-w>>', { desc = 'Increase width' })
 
 -- terminal
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-map('n', '<leader>tt', function() Snacks.terminal(nil, { count = 1 }) end, { desc = 'Toggle terminal (float)' })
-map('n', '<leader>tT', function() Snacks.terminal(nil, { count = 2, cwd = vim.fn.expand('%:p:h') }) end, { desc = 'Terminal (file dir)' })
-map('n', '<leader>ts', function() Snacks.terminal(nil, { count = 3, win = { position = 'right', width = 0.4 } }) end, { desc = 'Toggle terminal (split)' })
+map('n', '<leader>tt', function()
+  Snacks.terminal(nil, { count = 1 })
+end, { desc = 'Toggle terminal (float)' })
+map('n', '<leader>tT', function()
+  Snacks.terminal(nil, { count = 2, cwd = vim.fn.expand '%:p:h' })
+end, { desc = 'Terminal (file dir)' })
+map('n', '<leader>ts', function()
+  Snacks.terminal(nil, { count = 3, win = { position = 'right', width = 0.4 } })
+end, { desc = 'Toggle terminal (split)' })
 
 -- lsp (buffer-local, set on attach)
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -112,13 +154,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- diagnostics
-map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev diagnostic' })
-map('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+map('n', '[d', function() vim.diagnostic.jump { count = -1 } end, { desc = 'Prev diagnostic' })
+map('n', ']d', function() vim.diagnostic.jump { count = 1 } end, { desc = 'Next diagnostic' })
 map('n', '[e', function()
-  vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
+  vim.diagnostic.jump { count = -1, severity = vim.diagnostic.severity.ERROR }
 end, { desc = 'Prev error' })
 map('n', ']e', function()
-  vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
+  vim.diagnostic.jump { count = 1, severity = vim.diagnostic.severity.ERROR }
 end, { desc = 'Next error' })
 map('n', '<leader>e', function()
   local winid = vim.diagnostic.open_float { focusable = true }

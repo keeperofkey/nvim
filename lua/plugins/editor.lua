@@ -1,27 +1,49 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = {
+      local ts = require 'nvim-treesitter'
+
+      ts.setup {
+        install_dir = vim.fn.stdpath 'data' .. '/site',
+      }
+
+      ts.install {
+        'lua',
+        'vim',
+        'vimdoc',
+        'query',
+        'markdown',
+        'markdown_inline',
+        'fish',
+        'regex',
+        'bash',
+        'html',
+        'javascript',
+        'css',
+        'typescript',
+      }
+
+      vim.treesitter.language.register('bash', 'zsh')
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = {
           'lua',
           'vim',
-          'vimdoc',
+          'help',
           'query',
           'markdown',
-          'markdown_inline',
-          'bash',
+          'sh',
+          'fish',
+          'zsh',
           'html',
           'javascript',
           'css',
           'typescript',
         },
-        highlight = { enable = true },
-      }
-
-      vim.api.nvim_create_autocmd('FileType', {
         callback = function()
           local ok = pcall(vim.treesitter.start)
           if not ok then

@@ -1,6 +1,6 @@
 local M = {}
 
-local previewers = require('snacks.picker.preview')
+local previewers = require 'snacks.picker.preview'
 
 local function make_items(dir)
   local items = {}
@@ -19,7 +19,9 @@ local function make_items(dir)
   if handle then
     while true do
       local name, ftype = vim.uv.fs_scandir_next(handle)
-      if not name then break end
+      if not name then
+        break
+      end
       local full = dir .. name
       if ftype == 'directory' then
         table.insert(dirs, { name = name, full = full })
@@ -28,8 +30,12 @@ local function make_items(dir)
       end
     end
   end
-  table.sort(dirs, function(a, b) return a.name < b.name end)
-  table.sort(files, function(a, b) return a.name < b.name end)
+  table.sort(dirs, function(a, b)
+    return a.name < b.name
+  end)
+  table.sort(files, function(a, b)
+    return a.name < b.name
+  end)
 
   for _, d in ipairs(dirs) do
     table.insert(items, {
@@ -54,13 +60,17 @@ end
 
 function M.browse(dir)
   dir = vim.fn.fnamemodify(dir or vim.fn.getcwd(), ':p')
-  if dir:sub(-1) ~= '/' then dir = dir .. '/' end
+  if dir:sub(-1) ~= '/' then
+    dir = dir .. '/'
+  end
 
   local items = make_items(dir)
 
-  Snacks.picker.pick({
+  Snacks.picker.pick {
     title = vim.fn.fnamemodify(dir:sub(1, -2), ':~') .. '/',
-    finder = function() return items end,
+    finder = function()
+      return items
+    end,
     format = function(item)
       if item._is_dir then
         return { { item.text, 'Directory' } }
@@ -96,7 +106,7 @@ function M.browse(dir)
         },
       },
     },
-  })
+  }
 end
 
 return M
